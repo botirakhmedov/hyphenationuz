@@ -12,7 +12,8 @@ if (args.Length == 0)
 
 try
 {
-    transform.Proccess(args[0]);
+    Console.WriteLine(args[0]);
+    //transform.Proccess(args[0]);
 }
 catch (Exception ex)
 {

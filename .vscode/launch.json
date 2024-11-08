@@ -1,0 +1,15 @@
+{
+    "configurations": [
+    {
+        "name": ".NET Core Launch (console)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/hypenation_splitter/bin/Debug/net8.0/hypenation_splitter.dll",
+        "args": ["asdasdddddd"],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "console": "internalConsole"
+    }
+    ]
+}
