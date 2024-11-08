@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hypenation_splitter
+namespace hyphenation_splitter
 {
     internal class Transform
     {
@@ -16,7 +16,7 @@ namespace hypenation_splitter
                 IEnumerable<string> files = File.ReadAllLines(fileName);
                 if (files != null || files.Any())
                 {
-                    string outFile = "hypenation.txt";
+                    string outFile = "hyphenation.txt";
                     using (StreamWriter writer = new StreamWriter(outFile))
                     {
                         foreach (string file in files)

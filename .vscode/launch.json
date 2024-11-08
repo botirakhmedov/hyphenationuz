@@ -5,7 +5,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build",
-        "program": "${workspaceFolder}/hypenation_splitter/bin/Debug/net8.0/hypenation_splitter.dll",
+        "program": "${workspaceFolder}/hyphenation_splitter/bin/Debug/net8.0/hyphenation_splitter.dll",
         "args": ["asdasdddddd"],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,

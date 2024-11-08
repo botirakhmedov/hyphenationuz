@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using hypenation_splitter;
+using hyphenation_splitter;
 
 Console.WriteLine("Hello, World!");
 Transform transform = new();
