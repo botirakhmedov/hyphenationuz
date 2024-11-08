@@ -6,7 +6,7 @@
         "request": "launch",
         "preLaunchTask": "build",
         "program": "${workspaceFolder}/hyphenation_splitter/bin/Debug/net8.0/hyphenation_splitter.dll",
-        "args": ["asdasdddddd"],
+        "args": ["o‘aba’diy"],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,
         "console": "internalConsole"

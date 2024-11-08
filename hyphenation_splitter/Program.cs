@@ -13,7 +13,7 @@ if (args.Length == 0)
 try
 {
     Console.WriteLine(args[0]);
-    //transform.Proccess(args[0]);
+    transform.Proccess(args[0]);
 }
 catch (Exception ex)
 {
