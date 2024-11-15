@@ -19,5 +19,6 @@
         "string": "cpp",
         "chrono": "cpp",
         "filesystem": "cpp"
-    }
+    },
+    "makefile.configureOnOpen": false
 }
