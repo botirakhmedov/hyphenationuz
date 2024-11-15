@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
 project(
-    "CppTemplate"
+    "hyphenation_splitter"
     VERSION 1.0.0
     LANGUAGES C CXX)
 
@@ -35,7 +35,7 @@ option(ENABLE_CMAKE_FORMAT "Enable to add cmake-format." OFF)
 option(ENABLE_LTO "Enable to add Link Time Optimization." ON)
 
 # Project/Library Names
-set(EXECUTABLE_NAME "main")
+set(EXECUTABLE_NAME "hyphenation_console")
 
 # CMAKE MODULES
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
@@ -158,6 +158,6 @@ install(
     RUNTIME DESTINATION bin)
 
 install(
-    TARGETS "LibFoo" "LibBar"
+    TARGETS "LibBar"
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib)
