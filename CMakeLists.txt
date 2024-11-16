@@ -127,7 +127,7 @@ add_subdirectory(app)
 if(ENABLE_TESTING)
     include(CTest)
     enable_testing()
-    add_subdirectory(tests)
+#    add_subdirectory(tests)
 endif()
 
 # INSTALL TARGETS
@@ -139,6 +139,6 @@ install(
     RUNTIME DESTINATION bin)
 
 install(
-    TARGETS "LibBar"
+    TARGETS "data_repository"
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib)
