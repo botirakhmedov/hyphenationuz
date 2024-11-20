@@ -20,5 +20,8 @@
         "chrono": "cpp",
         "filesystem": "cpp"
     },
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "cSpell.words": [
+        "ctest"
+    ]
 }

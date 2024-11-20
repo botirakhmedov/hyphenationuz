@@ -127,7 +127,7 @@ add_subdirectory(app)
 if(ENABLE_TESTING)
     include(CTest)
     enable_testing()
-#    add_subdirectory(tests)
+    add_subdirectory(tests)
 endif()
 
 # INSTALL TARGETS
