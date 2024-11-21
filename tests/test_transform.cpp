@@ -2,9 +2,11 @@
 
 #include "transform_logic.h"
 
-TEST_CASE("sum1")
+TEST_CASE("syllable")
 {
-    // REQUIRE(summing(0, 1) == 1);
+    transform_logic tl;
+
+    REQUIRE(tl.parse_to_syllable("adabiy") == "a-da-biy");
     // REQUIRE(summing(1, 0) == 1);
 }
 
