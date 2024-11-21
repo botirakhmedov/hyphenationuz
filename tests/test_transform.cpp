@@ -5,8 +5,8 @@
 TEST_CASE("syllable")
 {
     transform_logic tl;
-
-    REQUIRE(tl.parse_to_syllable("adabiy") == "a-da-biy");
+    //tl.word_to_letters("O‘ma’rifiy");
+    REQUIRE(tl.word_to_syllable("adabiy") == "a-da-biy");
     // REQUIRE(summing(1, 0) == 1);
 }
 

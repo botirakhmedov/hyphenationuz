@@ -17,7 +17,8 @@ namespace fs = std::filesystem;
 int main(int argc, char **argv)
 {
     std::shared_ptr<transform_logic> trans = std::make_shared<transform_logic>();
-    trans->test();
+    std::string ss {"O‘ma’rifiy"};
+    trans->word_to_letters(ss);
 
     const auto welcome_message =
         fmt::format("Welcome to {} v{}\n", project_name, project_version);

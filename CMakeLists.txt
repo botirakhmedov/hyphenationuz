@@ -75,6 +75,7 @@ if(USE_CPM)
     cpmaddpackage("gh:fmtlib/fmt#9.1.0")
     cpmaddpackage("gh:gabime/spdlog#v1.13.0")
     cpmaddpackage("gh:jarro2783/cxxopts#v3.1.1")
+    #cpmaddpackage("gh:boostorg/boost#boost-1.86.0")
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.5.3")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
@@ -108,6 +109,13 @@ else()
         GIT_TAG v3.1.1
         GIT_SHALLOW TRUE)
     FetchContent_MakeAvailable(cxxopts)
+
+    # FetchContent_Declare(
+    #     Boost
+    #     GIT_REPOSITORY https://github.com/boostorg/boost
+    #     GIT_TAG boost-1.86.0 
+    #     GIT_SHALLOW TRUE)
+    # FetchContent_MakeAvailable(boostorg)
 
     if(ENABLE_TESTING)
         FetchContent_Declare(
