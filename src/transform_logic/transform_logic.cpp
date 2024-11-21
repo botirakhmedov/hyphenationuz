@@ -1,18 +1,36 @@
 #include "transform_logic.h"
 #include "interface.h"
 #include <vector>
-#include <boost/algorithm/string.hpp>
 
-void transform_logic::test()
+word_info transform_logic::analyze_word(const std::string &inp_word)
 {
-    std::shared_ptr<repository> repo = std::make_shared<repository>();
-    repo->test();
+    return word_info();
+}
+
+std::string transform_logic::get_clean_word(const std::string &inp_word)
+{
+    auto charpointer = inp_word.c_str();
+    for(size_t i = 0; i < inp_word.size(); i++)
+    {
+        
+    }
+    return std::string();
+}
+
+void transform_logic::replace_all(std::string &source,
+                                  const std::string &search,
+                                  const std::string &replace)
+{
+    size_t pos = 0;
+    while ((pos = source.find(search, pos)) != std::string::npos) {
+         source.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
 }
 
 std::list<std::string> transform_logic::word_to_letters(std::string inp_word)
 {
-    char tmp = '\2';
-    std::string tstr {"\\230"};
+    char tmp = 0;
     std::vector<char> data(inp_word.begin(), inp_word.end());
     for(int i = 0; i<data.size(); i++){
         char ichr = data.at(i);

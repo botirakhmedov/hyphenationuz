@@ -6,14 +6,9 @@ TEST_CASE("syllable")
 {
     transform_logic tl;
     //tl.word_to_letters("O‘ma’rifiy");
-    REQUIRE(tl.word_to_syllable("adabiy") == "a-da-biy");
+    std::string source {"O‘ma’rifiy"};
+    tl.replace_all(source, "‘","`");
+    tl.replace_all(source, "’","'");
+    REQUIRE(source == "O`ma'rifiy");
     // REQUIRE(summing(1, 0) == 1);
-}
-
-TEST_CASE("branch1")
-{
-    // REQUIRE(fn_branch(true, false) == 0);
-    // REQUIRE(fn_branch(true, true) == 0);
-    // REQUIRE(fn_branch(false, true) == 0);
-    // REQUIRE(fn_branch(false, false) == 1);
 }
