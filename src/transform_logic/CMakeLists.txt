@@ -1,7 +1,9 @@
 set(LIBRARY_SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/transform_logic.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/transform_logic.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/word_extractor.cpp")
 set(LIBRARY_HEADERS 
     "${CMAKE_CURRENT_SOURCE_DIR}/transform_logic.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/word_extractor.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/word_info_model.h")
 set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 

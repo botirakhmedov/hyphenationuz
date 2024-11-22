@@ -1,15 +1,104 @@
 #include "word_extractor.h"
+#include <map>
+#include <algorithm>
 
-const std::string stop_symbols {" {}()/|\\.,[]?\t\n\r"};
-std::string word_extractor::get_clean_word(const std::string &inp_word)
+const std::string stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};
+
+const std::map<std::string, std::string> change_map {
+    {"‘","`"},
+    {"’","'"}
+};
+
+const std::map<std::string, std::string> digraph_map {
+    {"o`","O"},
+    {"g`","G"},
+    {"ch","c"},
+    {"sh","w"}
+};
+
+
+size_t find_start_index(const std::string & inp_word)
 {
-    auto charpointer = inp_word.c_str();
+    char cur_char = 0;
     for(size_t i = 0; i < inp_word.size(); i++)
     {
-        if(stop_symbols.find(inp_word.at(i) != std::string::npos))
+        cur_char = inp_word.at(i);
+        if((cur_char>='A' && cur_char<='Z') || (cur_char>='a' && cur_char<='z'))
         {
-
+            return i;
         }
     }
-    return std::string();
+    return 0;
+}
+
+size_t find_length(const std::string & inp_word, size_t start_index =0)
+{
+    for(size_t i = start_index; i < inp_word.size(); i++)
+    {
+        if(stop_symbols.find(inp_word.at(i)) != std::string::npos)
+        {
+            return i - start_index;
+        }
+    }
+    return 0;
+}
+
+std::string word_extractor::get_clean_word(const std::string &inp_word)
+{
+    std::string internal_copy = inp_word;
+
+    //std::transform(internal_copy.begin(), internal_copy.end(), internal_copy.begin(), ::tolower);
+    size_t start_index = find_start_index(inp_word);
+    size_t word_length = find_length(inp_word, start_index);
+
+    return inp_word.substr(start_index, word_length);
+}
+
+std::string word_extractor::convert_to_one_letter_ascii(const std::string &inp_word)
+{
+    std::string internal_copy = inp_word;
+    std::transform(internal_copy.begin(), internal_copy.end(), internal_copy.begin(), ::tolower);
+    for(const auto& [key, value]:change_map)
+    {
+        replace_all(internal_copy, key, value);    
+    }
+    
+    for(const auto& [key, value]:digraph_map)
+    {
+        replace_all(internal_copy, key, value);    
+    }
+    return internal_copy;
+}
+
+std::vector<std::string> word_extractor::split_to_syllables(
+    const std::string &inp_word)
+{
+    std::vector<std::string> ret_val;
+    if(inp_word.size() <= 3)
+    {
+        ret_val.push_back(inp_word);
+    }
+    else
+    {
+
+    }
+    return ret_val;
+}
+
+std::vector<std::string> word_extractor::hyphenation_from_syllables(
+    const std::vector<std::string> &inp_data)
+{
+
+    return std::vector<std::string>();
+}
+
+void word_extractor::replace_all(std::string &source,
+                                  const std::string &search,
+                                  const std::string &replace)
+{
+    size_t pos = 0;
+    while ((pos = source.find(search, pos)) != std::string::npos) {
+         source.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
 }

@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "transform_logic.h"
+#include "word_extractor.h"
 
 TEST_CASE("syllable")
 {
@@ -10,5 +11,22 @@ TEST_CASE("syllable")
     tl.replace_all(source, "‘","`");
     tl.replace_all(source, "’","'");
     REQUIRE(source == "O`ma'rifiy");
-    // REQUIRE(summing(1, 0) == 1);
+}
+
+TEST_CASE("word_extractor")
+{
+    SECTION( "Get clean word" ) {
+        REQUIRE(word_extractor::get_clean_word(" ()[]/O‘ma’rifiy (sosd)") == "O‘ma’rifiy");
+        REQUIRE(word_extractor::get_clean_word(" O‘ma’ri-fiy (sosd)") == "O‘ma’ri-fiy");
+        REQUIRE(word_extractor::get_clean_word(" -O‘ma’rifiy,: (sosd)") == "O‘ma’rifiy");
+    }
+
+    SECTION( "Get ASCII word" ) {
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("O‘ma’rifiy") == "Oma'rifiy");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("Chang") == "cang");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig‘i") == "tasdiGi");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig`i") == "tasdiGi");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("toshqin") == "towqin");
+    }
+    
 }

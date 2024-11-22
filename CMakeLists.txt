@@ -77,7 +77,7 @@ if(USE_CPM)
     cpmaddpackage("gh:jarro2783/cxxopts#v3.1.1")
     #cpmaddpackage("gh:boostorg/boost#boost-1.86.0")
     if(ENABLE_TESTING)
-        cpmaddpackage("gh:catchorg/Catch2#v3.5.3")
+        cpmaddpackage("gh:catchorg/Catch2#v3.7.1")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
     endif()
 else()
@@ -121,7 +121,7 @@ else()
         FetchContent_Declare(
             Catch2
             GIT_REPOSITORY https://github.com/catchorg/Catch2
-            GIT_TAG v3.5.3
+            GIT_TAG v3.7.1
             GIT_SHALLOW TRUE)
         FetchContent_MakeAvailable(Catch2)
         list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
