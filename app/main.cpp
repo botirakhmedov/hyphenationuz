@@ -17,6 +17,8 @@ namespace fs = std::filesystem;
 
 int main(int argc, char **argv)
 {
+    std::string test_word {"tasdi9i"};
+    word_extractor::split_to_syllables(test_word);
     const auto welcome_message =
         fmt::format("Welcome to {} v{}\n", project_name, project_version);
     spdlog::info(welcome_message);

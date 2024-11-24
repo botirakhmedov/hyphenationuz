@@ -22,10 +22,10 @@ TEST_CASE("word_extractor")
     }
 
     SECTION( "Get ASCII word" ) {
-        REQUIRE(word_extractor::convert_to_one_letter_ascii("O‘ma’rifiy") == "Oma'rifiy");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("O‘ma’rifiy") == "0ma'rifiy");
         REQUIRE(word_extractor::convert_to_one_letter_ascii("Chang") == "cang");
-        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig‘i") == "tasdiGi");
-        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig`i") == "tasdiGi");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig‘i") == "tasdi9i");
+        REQUIRE(word_extractor::convert_to_one_letter_ascii("tasdig`i") == "tasdi9i");
         REQUIRE(word_extractor::convert_to_one_letter_ascii("toshqin") == "towqin");
     }
     

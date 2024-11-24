@@ -10,12 +10,13 @@ const std::map<std::string, std::string> change_map {
 };
 
 const std::map<std::string, std::string> digraph_map {
-    {"o`","O"},
-    {"g`","G"},
+    {"o`","0"},
+    {"g`","9"},
     {"ch","c"},
     {"sh","w"}
 };
 
+const std::string vowels {"aeuoi0"};
 
 size_t find_start_index(const std::string & inp_word)
 {
@@ -60,7 +61,7 @@ std::string word_extractor::convert_to_one_letter_ascii(const std::string &inp_w
     std::transform(internal_copy.begin(), internal_copy.end(), internal_copy.begin(), ::tolower);
     for(const auto& [key, value]:change_map)
     {
-        replace_all(internal_copy, key, value);    
+        replace_all(internal_copy, key, value);
     }
     
     for(const auto& [key, value]:digraph_map)
@@ -70,8 +71,7 @@ std::string word_extractor::convert_to_one_letter_ascii(const std::string &inp_w
     return internal_copy;
 }
 
-std::vector<std::string> word_extractor::split_to_syllables(
-    const std::string &inp_word)
+std::vector<std::string> word_extractor::split_to_syllables(const std::string &inp_word)
 {
     std::vector<std::string> ret_val;
     if(inp_word.size() <= 3)
@@ -80,7 +80,38 @@ std::vector<std::string> word_extractor::split_to_syllables(
     }
     else
     {
+        std::string tmp_syllable;
+        std::vector<size_t> vowel_indexes;
+        for(size_t index = 0; index < inp_word.size(); index++)
+        {
+            if(vowels.find(inp_word.at(index)) != std::string::npos)
+            {
+                vowel_indexes.push_back(index);
+            }
+        }
 
+        if(vowel_indexes.size() > 1)
+        {
+            size_t start_vowel_index = 0;
+            for(size_t vowel_index = 0; vowel_index < vowel_indexes.size(); vowel_index++)
+            {
+                if(vowel_index < (vowel_indexes.size() - 1))
+                {
+                    size_t first_index = vowel_indexes.at(vowel_index);
+                    size_t second_index = vowel_indexes.at(vowel_index+1);
+                    size_t space = second_index - first_index;
+                    
+                }
+                else
+                {
+                    ret_val.push_back(inp_word.substr(start_vowel_index));
+                }
+            }
+        }
+        else
+        {
+            ret_val.push_back(inp_word);
+        }
     }
     return ret_val;
 }
