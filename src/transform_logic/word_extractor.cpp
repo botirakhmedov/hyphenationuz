@@ -92,7 +92,7 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
 
         if(vowel_indexes.size() > 1)
         {
-            size_t start_vowel_index = 0;
+            size_t start_syllable_index = 0;
             for(size_t vowel_index = 0; vowel_index < vowel_indexes.size(); vowel_index++)
             {
                 if(vowel_index < (vowel_indexes.size() - 1))
@@ -104,34 +104,43 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
                     size_t t_index = sub_str.find('-');
                     if(t_index != std::string::npos)
                     {
-                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index));
-                        start_vowel_index = t_index + 2;
+                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index));
+                        start_syllable_index = t_index + 2;
                     }
                     else if((t_index = sub_str.find('\'')) != std::string::npos)
                     {
-                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index + 1));
-                        start_vowel_index = t_index + 2;
+                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index + 1));
+                        start_syllable_index = t_index + 2;
                     }
                     else if(space == 1)
                     {
-                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index));
-                        start_vowel_index = t_index + 1;
+                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index));
+                        start_syllable_index = t_index + 1;
                     }
                     else
                     {
+                        bool has_pair_letters = false;
                         for(size_t sub_index = first_index +2; sub_index < space; sub_index++)
                         {
                             if(inp_word.at(sub_index) == inp_word.at(sub_index-1))
                             {
-                                ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index - 1));
-                                start_vowel_index = t_index;
+                                ret_val.push_back(inp_word.substr(start_syllable_index, sub_index - start_syllable_index - 1));
+                                start_syllable_index = sub_index;
+                                has_pair_letters
                             }
+                        }
+
+                        if(!has_pair_letters)
+                        {
+                            t_index = space/2 + start_syllable_index - 1;
+                            ret_val.push_back(inp_word.substr(start_syllable_index, t_index));
+                                start_syllable_index = t_index;
                         }
                     }
                 }
                 else
                 {
-                    ret_val.push_back(inp_word.substr(start_vowel_index));
+                    ret_val.push_back(inp_word.substr(start_syllable_index));
                 }
             }
         }
