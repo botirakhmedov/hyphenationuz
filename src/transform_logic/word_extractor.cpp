@@ -100,7 +100,34 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
                     size_t first_index = vowel_indexes.at(vowel_index);
                     size_t second_index = vowel_indexes.at(vowel_index+1);
                     size_t space = second_index - first_index;
-                    
+                    std::string sub_str = inp_word.substr(first_index, second_index - first_index);
+                    size_t t_index = sub_str.find('-');
+                    if(t_index != std::string::npos)
+                    {
+                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index));
+                        start_vowel_index = t_index + 2;
+                    }
+                    else if((t_index = sub_str.find('\'')) != std::string::npos)
+                    {
+                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index + 1));
+                        start_vowel_index = t_index + 2;
+                    }
+                    else if(space == 1)
+                    {
+                        ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index));
+                        start_vowel_index = t_index + 1;
+                    }
+                    else
+                    {
+                        for(size_t sub_index = first_index +2; sub_index < space; sub_index++)
+                        {
+                            if(inp_word.at(sub_index) == inp_word.at(sub_index-1))
+                            {
+                                ret_val.push_back(inp_word.substr(start_vowel_index, t_index - start_vowel_index - 1));
+                                start_vowel_index = t_index;
+                            }
+                        }
+                    }
                 }
                 else
                 {
