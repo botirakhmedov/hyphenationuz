@@ -108,7 +108,8 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "valarray": "cpp",
-        "csignal": "cpp"
+        "csignal": "cpp",
+        "text_encoding": "cpp"
     },
     "makefile.configureOnOpen": false,
     "cSpell.words": [

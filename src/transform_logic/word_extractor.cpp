@@ -1,6 +1,7 @@
 #include "word_extractor.h"
 #include <map>
 #include <algorithm>
+#include <sstream>
 
 const std::string stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};
 
@@ -98,27 +99,24 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
                 if(vowel_index < (vowel_indexes.size() - 1))
                 {
                     size_t first_index = vowel_indexes.at(vowel_index) + 1;
-                    size_t second_index = vowel_indexes.at(vowel_index+1);
-                    size_t space = second_index - first_index;
+                    //size_t second_index = vowel_indexes.at(vowel_index + 1);
+                    size_t space = vowel_indexes.at(vowel_index + 1) - first_index;
                     std::string sub_str = inp_word.substr(first_index, space);
-                    size_t t_index = sub_str.find('-');
-                    if(t_index != std::string::npos)
+                    size_t t_index = 0;
+                    size_t size_of_syllable = 0;
+                    if((t_index = sub_str.find('-')) != std::string::npos)
                     {
-                        tmp_syllable = inp_word.substr(start_syllable_index, t_index - start_syllable_index);
+                        size_of_syllable = first_index + t_index - start_syllable_index;
+                        tmp_syllable = inp_word.substr(start_syllable_index, size_of_syllable);
                         ret_val.push_back(tmp_syllable);
-                        start_syllable_index = t_index + 2;
+                        start_syllable_index += (size_of_syllable + 1);
                     }
                     else if((t_index = sub_str.find('\'')) != std::string::npos)
                     {
-                        tmp_syllable = inp_word.substr(start_syllable_index, t_index - start_syllable_index + 1);
+                        size_of_syllable = first_index + t_index - start_syllable_index + 1;
+                        tmp_syllable = inp_word.substr(start_syllable_index, size_of_syllable);
                         ret_val.push_back(tmp_syllable);
-                        start_syllable_index = t_index + 2;
-                    }
-                    else if(space == 1)
-                    {
-                        tmp_syllable = inp_word.substr(start_syllable_index, first_index - start_syllable_index);
-                        ret_val.push_back(tmp_syllable);
-                        start_syllable_index += first_index - start_syllable_index;
+                        start_syllable_index += size_of_syllable;
                     }
                     else
                     {
@@ -128,19 +126,20 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
                             size_t actual_index = sub_index + first_index;
                             if(inp_word.at(actual_index) == inp_word.at(actual_index - 1))
                             {
-                                tmp_syllable = inp_word.substr(start_syllable_index, actual_index - start_syllable_index);
+                                size_of_syllable = actual_index - start_syllable_index ;
+                                tmp_syllable = inp_word.substr(start_syllable_index, size_of_syllable);
                                 ret_val.push_back(tmp_syllable);
-                                start_syllable_index = actual_index;
+                                start_syllable_index += size_of_syllable;
                                 has_pair_letters = true;
                             }
                         }
 
                         if(!has_pair_letters)
                         {
-                            size_t size_of_syllable = space/2 + first_index - start_syllable_index;
+                            size_of_syllable = space/2 + first_index - start_syllable_index;
                             tmp_syllable = inp_word.substr(start_syllable_index, size_of_syllable);
                             ret_val.push_back(tmp_syllable);
-                                start_syllable_index += size_of_syllable;
+                            start_syllable_index += size_of_syllable;
                         }
                     }
                 }
@@ -159,11 +158,52 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
     return ret_val;
 }
 
-std::vector<std::string> word_extractor::hyphenation_from_syllables(
-    const std::vector<std::string> &inp_data)
+std::vector<std::string> word_extractor::hyphenation_from_syllables(const std::vector<std::string> &inp_data)
 {
+    
+    if(inp_data.size() > 1)
+    {
+        std::vector<std::string> ret_val;
+        size_t start_index = 0;
+        if(inp_data.front().size() == 1)
+        {
+            std::ostringstream first_item_string;
+            first_item_string << inp_data.at(0) << inp_data.at(1);
+            ret_val.push_back(first_item_string.str());
+            start_index = 2;
+        }
+        for(size_t i = start_index; i < inp_data.size()-1; i++)
+        {
+            ret_val.push_back(inp_data.at(i));
+        }
+        if(inp_data.back().size() == 1)
+        {
+            std::ostringstream last_item_string;
+            last_item_string << ret_val.back() << inp_data.back();
+            ret_val.back() = last_item_string.str();
+        }
+        else
+        {
+            ret_val.push_back(inp_data.back());
+        }
+        return ret_val;
+    }
+    return inp_data;
+}
 
-    return std::vector<std::string>();
+std::string word_extractor::vector_to_dashed_string(const std::vector<std::string> &inp_vector)
+{
+    if(inp_vector.empty())
+    {
+        return std::string();
+    }
+    std::ostringstream out_string;
+    out_string << inp_vector.at(0);
+    for(size_t i = 1; i < inp_vector.size(); i++)
+    {
+        out_string << "-" << inp_vector.at(i);
+    }
+    return out_string.str();
 }
 
 void word_extractor::replace_all(std::string &source,
