@@ -97,50 +97,57 @@ std::vector<std::string> word_extractor::split_to_syllables(const std::string &i
             {
                 if(vowel_index < (vowel_indexes.size() - 1))
                 {
-                    size_t first_index = vowel_indexes.at(vowel_index);
+                    size_t first_index = vowel_indexes.at(vowel_index) + 1;
                     size_t second_index = vowel_indexes.at(vowel_index+1);
                     size_t space = second_index - first_index;
-                    std::string sub_str = inp_word.substr(first_index, second_index - first_index);
+                    std::string sub_str = inp_word.substr(first_index, space);
                     size_t t_index = sub_str.find('-');
                     if(t_index != std::string::npos)
                     {
-                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index));
+                        tmp_syllable = inp_word.substr(start_syllable_index, t_index - start_syllable_index);
+                        ret_val.push_back(tmp_syllable);
                         start_syllable_index = t_index + 2;
                     }
                     else if((t_index = sub_str.find('\'')) != std::string::npos)
                     {
-                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index + 1));
+                        tmp_syllable = inp_word.substr(start_syllable_index, t_index - start_syllable_index + 1);
+                        ret_val.push_back(tmp_syllable);
                         start_syllable_index = t_index + 2;
                     }
                     else if(space == 1)
                     {
-                        ret_val.push_back(inp_word.substr(start_syllable_index, t_index - start_syllable_index));
-                        start_syllable_index = t_index + 1;
+                        tmp_syllable = inp_word.substr(start_syllable_index, first_index - start_syllable_index);
+                        ret_val.push_back(tmp_syllable);
+                        start_syllable_index += first_index - start_syllable_index;
                     }
                     else
                     {
                         bool has_pair_letters = false;
-                        for(size_t sub_index = first_index +2; sub_index < space; sub_index++)
+                        for(size_t sub_index = 1; sub_index < space; sub_index++)
                         {
-                            if(inp_word.at(sub_index) == inp_word.at(sub_index-1))
+                            size_t actual_index = sub_index + first_index;
+                            if(inp_word.at(actual_index) == inp_word.at(actual_index - 1))
                             {
-                                ret_val.push_back(inp_word.substr(start_syllable_index, sub_index - start_syllable_index - 1));
-                                start_syllable_index = sub_index;
-                                has_pair_letters
+                                tmp_syllable = inp_word.substr(start_syllable_index, actual_index - start_syllable_index);
+                                ret_val.push_back(tmp_syllable);
+                                start_syllable_index = actual_index;
+                                has_pair_letters = true;
                             }
                         }
 
                         if(!has_pair_letters)
                         {
-                            t_index = space/2 + start_syllable_index - 1;
-                            ret_val.push_back(inp_word.substr(start_syllable_index, t_index));
-                                start_syllable_index = t_index;
+                            size_t size_of_syllable = space/2 + first_index - start_syllable_index;
+                            tmp_syllable = inp_word.substr(start_syllable_index, size_of_syllable);
+                            ret_val.push_back(tmp_syllable);
+                                start_syllable_index += size_of_syllable;
                         }
                     }
                 }
                 else
                 {
-                    ret_val.push_back(inp_word.substr(start_syllable_index));
+                    tmp_syllable = inp_word.substr(start_syllable_index);
+                    ret_val.push_back(tmp_syllable);
                 }
             }
         }
