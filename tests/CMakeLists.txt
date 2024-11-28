@@ -1,7 +1,7 @@
 include(GoogleTest)
 
 add_executable("UnitTestTransform" "test_transform.cpp")
-target_link_libraries("UnitTestTransform" PUBLIC "transform_logic")
+target_link_libraries("UnitTestTransform" PUBLIC core)
 target_link_libraries("UnitTestTransform" PRIVATE GTest::gtest_main)
 
 if(${ENABLE_WARNINGS})

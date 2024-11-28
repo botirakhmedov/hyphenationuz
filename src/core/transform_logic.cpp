@@ -2,9 +2,9 @@
 #include "interface.h"
 #include <vector>
 
-word_info transform_logic::analyze_word(const std::string &inp_word)
+dto::word_unit transform_logic::analyze_word(const std::string &inp_word)
 {
-    return word_info();
+    return dto::word_unit();
 }
 
 std::string transform_logic::get_clean_word(const std::string &inp_word)

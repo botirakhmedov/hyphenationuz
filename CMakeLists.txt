@@ -161,6 +161,6 @@ install(
     RUNTIME DESTINATION bin)
 
 install(
-    TARGETS "data_repository" "transform_logic"
+    TARGETS "data_repository" core
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib)
