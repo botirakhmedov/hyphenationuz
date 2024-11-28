@@ -13,7 +13,7 @@ TEST(WordExtractortest, replaceAll)
     EXPECT_TRUE(source == "O`ma'rifiy");
 }
 
-TEST(WordExtractortest, asciiConvertion)
+TEST(WordExtractorTest, asciiConversion)
 {
     EXPECT_TRUE(word_extractor::get_clean_word(" ()[]/O‘ma’rifiy (sosd)") == "O‘ma’rifiy");
     EXPECT_TRUE(word_extractor::get_clean_word(" O‘ma’ri-fiy (sosd)") == "O‘ma’ri-fiy");
