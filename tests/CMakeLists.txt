@@ -1,8 +1,8 @@
-include(Catch)
+include(GoogleTest)
 
 add_executable("UnitTestTransform" "test_transform.cpp")
 target_link_libraries("UnitTestTransform" PUBLIC "transform_logic")
-target_link_libraries("UnitTestTransform" PRIVATE Catch2::Catch2WithMain)
+target_link_libraries("UnitTestTransform" PRIVATE GTest::gtest_main)
 
 if(${ENABLE_WARNINGS})
     target_set_warnings(
@@ -14,7 +14,7 @@ if(${ENABLE_WARNINGS})
         ${ENABLE_WARNINGS_AS_ERRORS})
 endif()
 
-catch_discover_tests("UnitTestTransform")
+gtest_discover_tests("UnitTestTransform")
 
 if(ENABLE_COVERAGE)
     set(COVERAGE_MAIN "coverage")

@@ -76,9 +76,14 @@ if(USE_CPM)
     cpmaddpackage("gh:gabime/spdlog#v1.13.0")
     cpmaddpackage("gh:jarro2783/cxxopts#v3.1.1")
     #cpmaddpackage("gh:boostorg/boost#boost-1.86.0")
+    # if(ENABLE_TESTING)
+    #     cpmaddpackage("gh:catchorg/Catch2#v3.7.1")
+    #     list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+    # endif()
     if(ENABLE_TESTING)
-        cpmaddpackage("gh:catchorg/Catch2#v3.7.1")
-        list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
+        cpmaddpackage("gh:google/googletest#v1.15.2")
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        # list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
     endif()
 else()
     message(STATUS "Using FetchContent")
@@ -116,15 +121,24 @@ else()
     #     GIT_TAG boost-1.86.0 
     #     GIT_SHALLOW TRUE)
     # FetchContent_MakeAvailable(boostorg)
-
+    # if(ENABLE_TESTING)
+    # FetchContent_Declare(
+    #     Catch2
+    #     GIT_REPOSITORY https://github.com/catchorg/Catch2
+    #     GIT_TAG v3.7.1
+    #     GIT_SHALLOW TRUE)
+    # FetchContent_MakeAvailable(Catch2)
+    # list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+    # endif()
     if(ENABLE_TESTING)
         FetchContent_Declare(
-            Catch2
-            GIT_REPOSITORY https://github.com/catchorg/Catch2
-            GIT_TAG v3.7.1
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest
+            GIT_TAG v1.15.2 
             GIT_SHALLOW TRUE)
-        FetchContent_MakeAvailable(Catch2)
-        list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+        #set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        FetchContent_MakeAvailable(googletest)
+        #list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
     endif()
 endif()
 
