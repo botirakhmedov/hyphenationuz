@@ -1,8 +1,8 @@
 include(GoogleTest)
 
 add_executable("UnitTestTransform" "test_transform.cpp")
-target_link_libraries("UnitTestTransform" PUBLIC commonlib core)
-target_link_libraries("UnitTestTransform" PRIVATE GTest::gtest_main)
+target_link_libraries("UnitTestTransform" PRIVATE commonlib core)
+target_link_libraries("UnitTestTransform" PRIVATE GTest::gtest_main GTest::gmock)
 
 if(${ENABLE_WARNINGS})
     target_set_warnings(

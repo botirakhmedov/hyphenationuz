@@ -17,7 +17,19 @@ namespace fs = std::filesystem;
 
 int main(int argc, char **argv)
 {
-    std::string test_word {"alang-alangai"};
+    std::string test_word {"alangali"};
+    // auto ret_value = transform::analyze_word(test_word);
+    // if(ret_value.has_error()){
+    //     std::cout << "Has error";
+    // }
+    // else
+    // {
+    //     auto res_data = ret_value.data();
+    //     std::cout << "w:" << res_data.target_word << std::endl;
+    //     std::cout << "s:" << res_data.syllable << std::endl;
+    //     std::cout << "h:" << res_data.hyphenation << std::endl;
+    // }
+
     //std::vector<std::string> s_list = word_extractor::split_to_syllables(test_word);
     
     //std::cout << word_extractor::vector_to_dashed_string(s_list) << std::endl; 

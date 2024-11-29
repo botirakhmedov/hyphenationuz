@@ -1,15 +1,33 @@
-#include <gtest/gtest.h>
-
+#include <gmock/gmock.h>
 #include "text_transformer.h"
 
-TEST(WordExtractortest, replaceAll)
+struct test_input_data{
+    std::string input;
+    std::string out_word;
+    std::string out_syllable;
+    std::string out_hyphenation;
+};
+
+std::vector<test_input_data> inp_data_vector {
+    test_input_data{"alangali", "alangali", "a-lan-ga-li", "alan-ga-li"},
+    test_input_data{"O‘ma’rifiy", "0ma'rifiy", "0-ma'-ri-fiy", "0ma'-ri-fiy"}
+};
+
+//class WordTransformationTest: public testing::TestWithParam<test_input_data>{};
+
+TEST(WordTransformationTest, AnalyzeWord)
 {
+    //test_input_data test_input = GetParam();
+    
+    for(const auto& in_item: inp_data_vector)
+    {
+        auto resultval = transform::analyze_word(in_item.input); 
+        EXPECT_FALSE(resultval.has_error());
+        EXPECT_EQ(in_item.out_word, resultval.data().target_word);
+        EXPECT_EQ(in_item.out_syllable, resultval.data().syllable);
+        EXPECT_EQ(in_item.out_hyphenation, resultval.data().hyphenation);
+    }
     
 }
 
-TEST(WordExtractorTest, asciiConversion)
-{
-//    EXPECT_TRUE(word_extractor::get_clean_word(" ()[]/O‘ma’rifiy (sosd)") == "O‘ma’rifiy");
-    
-//    EXPECT_TRUE(word_extractor::convert_to_one_letter_ascii("O‘ma’rifiy") == "0ma'rifiy");
-}
+//INSTANTIATE_TEST_SUITE_P(WordAnalyzeTest, WordTransformationTest, testing::ValuesIn(inp_data_vector));

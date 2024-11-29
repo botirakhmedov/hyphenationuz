@@ -1,38 +1,53 @@
-#include "text_transformer.h"
-#include "interface.h"
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <map>
 #include "text_transformer.h"
 
-const std::string text_transformer::stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};
+namespace transform{
+const std::string stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};
 
-const std::map<std::string, std::string> text_transformer::change_map{
+const std::map<std::string, std::string> change_map{
     {"‘","`"},
     {"’","'"}
 };
 
-const std::map<std::string, std::string> text_transformer::digraph_map {
+const std::map<std::string, std::string> digraph_map {
     {"o`","0"},
     {"g`","9"},
     {"ch","c"},
     {"sh","w"}
 };
 
-const std::string text_transformer::vowels {"aeuoi0"};
+const std::string vowels {"aeuoi0"};
 
-result<dto::word_unit> text_transformer::analyze_word(const std::string &inp_word)
+size_t find_start_index(const std::string &inp_word)
 {
-    std::string clean_word = get_clean_word(inp_word);
-    if(clean_word.empty())
+    char cur_char = 0;
+    for(size_t i = 0; i < inp_word.size(); i++)
     {
-        return error_code::ge_no_data;
+        cur_char = inp_word.at(i);
+        if((cur_char>='A' && cur_char<='Z') || (cur_char>='a' && cur_char<='z'))
+        {
+            return i;
+        }
     }
-    convert_to_one_letter_ascii(clean_word);
-    return error_code::ge_unknown;
+    return inp_word.size();
 }
 
-void text_transformer::replace_all(std::string &source, const std::string &search, const std::string &replace)
+size_t find_length(const std::string &inp_word, size_t start_index)
+{
+    for(size_t i = start_index; i < inp_word.size(); i++)
+    {
+        if(stop_symbols.find(inp_word.at(i)) != std::string::npos)
+        {
+            return i - start_index;
+        }
+    }
+    return inp_word.size();
+}
+
+void replace_all(std::string &source, const std::string &search, const std::string &replace)
 {
     size_t pos = 0;
     while ((pos = source.find(search, pos)) != std::string::npos) {
@@ -41,7 +56,7 @@ void text_transformer::replace_all(std::string &source, const std::string &searc
     }
 }
 
-std::string text_transformer::get_clean_word(const std::string &inp_word)
+std::string get_clean_word(const std::string &inp_word)
 {
     std::string internal_copy = inp_word;
 
@@ -51,7 +66,7 @@ std::string text_transformer::get_clean_word(const std::string &inp_word)
     return inp_word.substr(start_index, word_length);
 }
 
-std::string text_transformer::convert_to_one_letter_ascii(const std::string &inp_word)
+std::string convert_to_one_letter_ascii(const std::string &inp_word)
 {
     std::string internal_copy = inp_word;
     std::transform(internal_copy.begin(), internal_copy.end(), internal_copy.begin(), ::tolower);
@@ -67,7 +82,7 @@ std::string text_transformer::convert_to_one_letter_ascii(const std::string &inp
     return internal_copy;
 }
 
-std::vector<std::string> text_transformer::split_to_syllables(const std::string &inp_word)
+std::vector<std::string> split_to_syllables(const std::string &inp_word)
 {
     std::vector<std::string> ret_val;
     if(inp_word.size() <= 3)
@@ -153,7 +168,7 @@ std::vector<std::string> text_transformer::split_to_syllables(const std::string 
     return ret_val;
 }
 
-std::vector<std::string> text_transformer::hyphenation_from_syllables(const std::vector<std::string> &inp_data)
+std::vector<std::string> hyphenation_from_syllables(const std::vector<std::string> &inp_data)
 {
     if(inp_data.size() > 1)
     {
@@ -185,7 +200,7 @@ std::vector<std::string> text_transformer::hyphenation_from_syllables(const std:
     return inp_data;
 }
 
-std::string text_transformer::vector_to_dashed_string(const std::vector<std::string> &inp_vector)
+std::string vector_to_dashed_string(const std::vector<std::string> &inp_vector)
 {
     if(inp_vector.empty())
     {
@@ -200,28 +215,21 @@ std::string text_transformer::vector_to_dashed_string(const std::vector<std::str
     return out_string.str();
 }
 
-size_t text_transformer::find_start_index(const std::string &inp_word)
+result<dto::word_unit> analyze_word(const std::string &inp_word)
 {
-    char cur_char = 0;
-    for(size_t i = 0; i < inp_word.size(); i++)
+    std::string clean_word = get_clean_word(inp_word);
+    if(clean_word.empty())
     {
-        cur_char = inp_word.at(i);
-        if((cur_char>='A' && cur_char<='Z') || (cur_char>='a' && cur_char<='z'))
-        {
-            return i;
-        }
+        return error_code::ge_no_data;
     }
-    return 0;
+    std::string ascii_str = convert_to_one_letter_ascii(clean_word);
+    auto syllable_vector = split_to_syllables(ascii_str);
+    auto hyphenation_vector = hyphenation_from_syllables(syllable_vector);
+    dto::word_unit return_value;
+    return_value.target_word = ascii_str;
+    return_value.syllable = vector_to_dashed_string(syllable_vector);
+    return_value.hyphenation = vector_to_dashed_string(hyphenation_vector);
+    return return_value;
 }
 
-size_t text_transformer::find_length(const std::string &inp_word, size_t start_index)
-{
-    for(size_t i = start_index; i < inp_word.size(); i++)
-    {
-        if(stop_symbols.find(inp_word.at(i)) != std::string::npos)
-        {
-            return i - start_index;
-        }
-    }
-    return 0;
 }
