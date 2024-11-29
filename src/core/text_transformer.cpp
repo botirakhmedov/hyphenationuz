@@ -2,22 +2,12 @@
 #include "interface.h"
 #include <vector>
 
-dto::word_unit transform_logic::analyze_word(const std::string &inp_word)
+dto::word_unit text_transformer::analyze_word(const std::string &inp_word)
 {
     return dto::word_unit();
 }
 
-std::string transform_logic::get_clean_word(const std::string &inp_word)
-{
-    auto charpointer = inp_word.c_str();
-    for(size_t i = 0; i < inp_word.size(); i++)
-    {
-        
-    }
-    return std::string();
-}
-
-void transform_logic::replace_all(std::string &source,
+void text_transformer::replace_all(std::string &source,
                                   const std::string &search,
                                   const std::string &replace)
 {
@@ -28,7 +18,7 @@ void transform_logic::replace_all(std::string &source,
     }
 }
 
-std::list<std::string> transform_logic::word_to_letters(std::string inp_word)
+std::list<std::string> text_transformer::word_to_letters(std::string inp_word)
 {
     char tmp = 0;
     std::vector<char> data(inp_word.begin(), inp_word.end());
@@ -37,14 +27,4 @@ std::list<std::string> transform_logic::word_to_letters(std::string inp_word)
         tmp = ichr;
     }
     return std::list<std::string>();
-}
-
-std::string transform_logic::word_to_syllable(std::string inp_word)
-{
-    return std::string();
-}
-
-std::string transform_logic::syllable_to_hyphenation(std::string inp_word)
-{
-    return std::string();
 }

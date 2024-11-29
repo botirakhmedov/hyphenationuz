@@ -6,5 +6,6 @@ namespace dto{
         std::string target_word;
         std::string syllable;
         std::string hyphenation;
+        std::string type;
     };
 }
