@@ -3,6 +3,7 @@
 
 enum error_code{
     ge_ok,
+    ge_no_data,
     ge_unknown
 };
 

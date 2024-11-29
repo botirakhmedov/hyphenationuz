@@ -109,7 +109,9 @@
         "typeindex": "cpp",
         "valarray": "cpp",
         "csignal": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
     },
     "makefile.configureOnOpen": false,
     "cSpell.words": [

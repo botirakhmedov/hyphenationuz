@@ -1,9 +1,7 @@
 set(LIBRARY_SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/word_extractor.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.cpp")
 set(LIBRARY_HEADERS 
-    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/word_extractor.h")
+    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.h")
 set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
 add_library(core STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})

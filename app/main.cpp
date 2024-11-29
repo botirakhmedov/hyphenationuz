@@ -9,8 +9,8 @@
 
 #include "config.hpp"
 //#include "interface.h"
-#include "transform_logic.h"
-#include "word_extractor.h"
+#include "text_transformer.h"
+//#include "word_extractor.h"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -18,12 +18,12 @@ namespace fs = std::filesystem;
 int main(int argc, char **argv)
 {
     std::string test_word {"alang-alangai"};
-    std::vector<std::string> s_list = word_extractor::split_to_syllables(test_word);
+    //std::vector<std::string> s_list = word_extractor::split_to_syllables(test_word);
     
-    std::cout << word_extractor::vector_to_dashed_string(s_list) << std::endl; 
+    //std::cout << word_extractor::vector_to_dashed_string(s_list) << std::endl; 
 
-    std::vector<std::string> h_list = word_extractor::hyphenation_from_syllables(s_list);
-    std::cout << word_extractor::vector_to_dashed_string(h_list) << std::endl; 
+    //std::vector<std::string> h_list = word_extractor::hyphenation_from_syllables(s_list);
+    //std::cout << word_extractor::vector_to_dashed_string(h_list) << std::endl; 
     const auto welcome_message =
         fmt::format("Welcome to {} v{}\n", project_name, project_version);
     spdlog::info(welcome_message);
