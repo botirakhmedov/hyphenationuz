@@ -4,24 +4,26 @@
 #include <map>
 #include "transform.h"
 
-namespace transform{
-const std::string stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};
+namespace core{
 
-const std::map<std::string, std::string> change_map{
+/// @brief 
+const std::string transform::stop_symbols = {" {}()/|\\.,[]?:;\t\n\r"};
+
+const std::map<std::string, std::string> transform::change_map = {
     {"‘","`"},
     {"’","'"}
 };
 
-const std::map<std::string, std::string> digraph_map {
+const std::map<std::string, std::string> transform::digraph_map = {
     {"o`","0"},
     {"g`","9"},
     {"ch","c"},
     {"sh","w"}
 };
 
-const std::string vowels {"aeuoi0"};
+const std::string transform::vowels = {"aeuoi0"};
 
-size_t find_start_index(const std::string &inp_word)
+size_t transform::find_start_index(const std::string &inp_word)
 {
     char cur_char = 0;
     for(size_t i = 0; i < inp_word.size(); i++)
@@ -35,7 +37,7 @@ size_t find_start_index(const std::string &inp_word)
     return inp_word.size();
 }
 
-size_t find_length(const std::string &inp_word, size_t start_index)
+size_t transform::find_length(const std::string &inp_word, size_t start_index)
 {
     for(size_t i = start_index; i < inp_word.size(); i++)
     {
@@ -47,7 +49,7 @@ size_t find_length(const std::string &inp_word, size_t start_index)
     return inp_word.size();
 }
 
-void replace_all(std::string &source, const std::string &search, const std::string &replace)
+void transform::replace_all(std::string &source, const std::string &search, const std::string &replace)
 {
     size_t pos = 0;
     while ((pos = source.find(search, pos)) != std::string::npos) {
@@ -56,7 +58,7 @@ void replace_all(std::string &source, const std::string &search, const std::stri
     }
 }
 
-std::string get_clean_word(const std::string &inp_word)
+std::string transform::get_clean_word(const std::string &inp_word)
 {
     std::string internal_copy = inp_word;
 
@@ -66,7 +68,7 @@ std::string get_clean_word(const std::string &inp_word)
     return inp_word.substr(start_index, word_length);
 }
 
-std::string convert_to_one_letter_ascii(const std::string &inp_word)
+std::string transform::convert_to_one_letter_ascii(const std::string &inp_word)
 {
     std::string internal_copy = inp_word;
     std::transform(internal_copy.begin(), internal_copy.end(), internal_copy.begin(), ::tolower);
@@ -82,7 +84,7 @@ std::string convert_to_one_letter_ascii(const std::string &inp_word)
     return internal_copy;
 }
 
-std::vector<std::string> split_to_syllables(const std::string &inp_word)
+std::vector<std::string> transform::split_to_syllables(const std::string &inp_word)
 {
     std::vector<std::string> ret_val;
     if(inp_word.size() <= 3)
@@ -168,7 +170,7 @@ std::vector<std::string> split_to_syllables(const std::string &inp_word)
     return ret_val;
 }
 
-std::vector<std::string> hyphenation_from_syllables(const std::vector<std::string> &inp_data)
+std::vector<std::string> transform::hyphenation_from_syllables(const std::vector<std::string> &inp_data)
 {
     if(inp_data.size() > 1)
     {
@@ -200,7 +202,7 @@ std::vector<std::string> hyphenation_from_syllables(const std::vector<std::strin
     return inp_data;
 }
 
-std::string vector_to_dashed_string(const std::vector<std::string> &inp_vector)
+std::string transform::vector_to_dashed_string(const std::vector<std::string> &inp_vector)
 {
     if(inp_vector.empty())
     {
@@ -215,7 +217,7 @@ std::string vector_to_dashed_string(const std::vector<std::string> &inp_vector)
     return out_string.str();
 }
 
-result<dto::word_unit> analyze_word(const std::string &inp_word)
+result<dto::word_unit> transform::analyze_word(const std::string &inp_word)
 {
     std::string clean_word = get_clean_word(inp_word);
     if(clean_word.empty())
@@ -232,4 +234,21 @@ result<dto::word_unit> analyze_word(const std::string &inp_word)
     return return_value;
 }
 
+std::vector<std::string> transform::string_to_words(const std::string &in_string)
+{
+    std::vector<std::string> ret_value;
+    std::stringstream ss(in_string);
+    std::string buf_str;
+  	// Delimiter
+    char del = ' ';
+   	// Splitting the str string by delimiter
+    while (std::getline(ss, buf_str, del))
+    {
+        if(!buf_str.empty())
+        {
+            ret_value.push_back(buf_str);
+        }
+    }
+    return ret_value;
 }
+} // namespace core

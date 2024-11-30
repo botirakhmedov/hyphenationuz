@@ -13,17 +13,42 @@ std::vector<test_input_data> inp_data_vector {
     test_input_data{"O‘ma’rifiy", "0ma'rifiy", "0-ma'-ri-fiy", "0ma'-ri-fiy"}
 };
 
+// class AnalyzeParameterizedTest : public testing::TestWithParam<test_input_data> {
+//     public:
+//         core::transform tr_object;
+// };
+
 TEST(WordTransformationTest, AnalyzeWord)
 {
-    //test_input_data test_input = GetParam();
-    
     for(const auto& in_item: inp_data_vector)
     {
-        auto resultval = transform::analyze_word(in_item.input); 
+        core::transform tr;
+        auto resultval = tr.analyze_word(in_item.input); 
         EXPECT_FALSE(resultval.has_error());
         EXPECT_EQ(in_item.out_word, resultval.data().target_word);
         EXPECT_EQ(in_item.out_syllable, resultval.data().syllable);
         EXPECT_EQ(in_item.out_hyphenation, resultval.data().hyphenation);
     }
-    
 }
+
+TEST(WordTransformationTest, SplitWord)
+{
+    core::transform tr;
+    std::string in_text = "If you find    yourself writing two";
+    std::vector<std::string> result{"If", "you", "find", "yourself", "writing", "two"};
+    auto resultval = tr.string_to_words(in_text);
+    EXPECT_EQ(result.size(), resultval.size());
+    EXPECT_TRUE(std::equal(std::begin(resultval), std::end(resultval), std::begin(result), std::end(result))); 
+}
+
+// TEST_P(AnalyzeParameterizedTest, AnalyzeWordTest)
+// {
+//     auto in_item = GetParam();
+//     auto resultval = tr_object.analyze_word(in_item.input); 
+//     EXPECT_FALSE(resultval.has_error());
+//     EXPECT_EQ(in_item.out_word, resultval.data().target_word);
+//     EXPECT_EQ(in_item.out_syllable, resultval.data().syllable);
+//     EXPECT_EQ(in_item.out_hyphenation, resultval.data().hyphenation);
+// }
+
+// INSTANTIATE_TEST_SUITE_P(WordValues, AnalyzeParameterizedTest, testing::ValuesIn(inp_data_vector));

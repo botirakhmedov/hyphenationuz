@@ -3,8 +3,9 @@
 
 enum error_code{
     ge_ok,
+    ge_unknown,
     ge_no_data,
-    ge_unknown
+    ge_unable_open_file
 };
 
 struct error_data{
