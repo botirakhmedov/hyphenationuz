@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <map>
-#include "text_transformer.h"
+#include "transform.h"
 
 namespace transform{
 const std::string stop_symbols {" {}()/|\\.,[]?:;\t\n\r"};

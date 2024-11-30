@@ -1,7 +1,9 @@
 set(LIBRARY_SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/transform.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/action_point.cpp")
 set(LIBRARY_HEADERS 
-    "${CMAKE_CURRENT_SOURCE_DIR}/text_transformer.h")
+    "${CMAKE_CURRENT_SOURCE_DIR}/transform.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/action_point.h")
 set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
 add_library(core STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})

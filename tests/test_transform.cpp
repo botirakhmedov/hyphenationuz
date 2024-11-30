@@ -1,5 +1,5 @@
 #include <gmock/gmock.h>
-#include "text_transformer.h"
+#include "transform.h"
 
 struct test_input_data{
     std::string input;
@@ -12,8 +12,6 @@ std::vector<test_input_data> inp_data_vector {
     test_input_data{"alangali", "alangali", "a-lan-ga-li", "alan-ga-li"},
     test_input_data{"O‘ma’rifiy", "0ma'rifiy", "0-ma'-ri-fiy", "0ma'-ri-fiy"}
 };
-
-//class WordTransformationTest: public testing::TestWithParam<test_input_data>{};
 
 TEST(WordTransformationTest, AnalyzeWord)
 {
@@ -29,5 +27,3 @@ TEST(WordTransformationTest, AnalyzeWord)
     }
     
 }
-
-//INSTANTIATE_TEST_SUITE_P(WordAnalyzeTest, WordTransformationTest, testing::ValuesIn(inp_data_vector));

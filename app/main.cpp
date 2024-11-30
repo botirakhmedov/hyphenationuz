@@ -8,9 +8,7 @@
 #include <spdlog/spdlog.h>
 
 #include "config.hpp"
-//#include "interface.h"
-#include "text_transformer.h"
-//#include "word_extractor.h"
+#include "transform.h"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
