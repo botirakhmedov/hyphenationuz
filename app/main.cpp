@@ -8,7 +8,7 @@
 #include <spdlog/spdlog.h>
 
 #include "config.hpp"
-#include "transform.h"
+#include "action_point.h"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;
@@ -16,79 +16,67 @@ namespace fs = std::filesystem;
 int main(int argc, char **argv)
 {
     std::string test_word {"alangali"};
-    // auto ret_value = transform::analyze_word(test_word);
-    // if(ret_value.has_error()){
-    //     std::cout << "Has error";
+    core::action_point action_point_object;
+    action_point_object.file_to_database("C:/Users/botir/lugat.txt", [&](std::string out_data){
+        std::cout << out_data << std::endl;
+        return error_code::ge_ok;
+    });
+    
+    // const auto welcome_message =
+    //     fmt::format("Welcome to {} v{}\n", project_name, project_version);
+    // spdlog::info(welcome_message);
+
+    // cxxopts::Options options(project_name.data(), welcome_message);
+
+    // options.add_options("arguments")("h,help", "Print usage")(
+    //     "f,filename",
+    //     "File name",
+    //     cxxopts::value<std::string>())(
+    //     "v,verbose",
+    //     "Verbose output",
+    //     cxxopts::value<bool>()->default_value("false"));
+
+    // auto result = options.parse(argc, argv);
+
+    // if (argc == 1 || result.count("help"))
+    // {
+    //     std::cout << options.help() << '\n';
+    //     return 0;
+    // }
+
+    // auto filename = std::string{};
+    // auto verbose = false;
+
+    // if (result.count("filename"))
+    // {
+    //     filename = result["filename"].as<std::string>();
     // }
     // else
     // {
-    //     auto res_data = ret_value.data();
-    //     std::cout << "w:" << res_data.target_word << std::endl;
-    //     std::cout << "s:" << res_data.syllable << std::endl;
-    //     std::cout << "h:" << res_data.hyphenation << std::endl;
+    //     return 1;
     // }
 
-    //std::vector<std::string> s_list = word_extractor::split_to_syllables(test_word);
-    
-    //std::cout << word_extractor::vector_to_dashed_string(s_list) << std::endl; 
+    // verbose = result["verbose"].as<bool>();
 
-    //std::vector<std::string> h_list = word_extractor::hyphenation_from_syllables(s_list);
-    //std::cout << word_extractor::vector_to_dashed_string(h_list) << std::endl; 
-    const auto welcome_message =
-        fmt::format("Welcome to {} v{}\n", project_name, project_version);
-    spdlog::info(welcome_message);
+    // if (verbose)
+    // {
+    //     fmt::print("Opening file: {}\n", filename);
+    // }
 
-    cxxopts::Options options(project_name.data(), welcome_message);
+    // auto ifs = std::ifstream{filename};
 
-    options.add_options("arguments")("h,help", "Print usage")(
-        "f,filename",
-        "File name",
-        cxxopts::value<std::string>())(
-        "v,verbose",
-        "Verbose output",
-        cxxopts::value<bool>()->default_value("false"));
+    // if (!ifs.is_open())
+    // {
+    //     return 1;
+    // }
 
-    auto result = options.parse(argc, argv);
+    // const auto parsed_data = json::parse(ifs);
 
-    if (argc == 1 || result.count("help"))
-    {
-        std::cout << options.help() << '\n';
-        return 0;
-    }
-
-    auto filename = std::string{};
-    auto verbose = false;
-
-    if (result.count("filename"))
-    {
-        filename = result["filename"].as<std::string>();
-    }
-    else
-    {
-        return 1;
-    }
-
-    verbose = result["verbose"].as<bool>();
-
-    if (verbose)
-    {
-        fmt::print("Opening file: {}\n", filename);
-    }
-
-    auto ifs = std::ifstream{filename};
-
-    if (!ifs.is_open())
-    {
-        return 1;
-    }
-
-    const auto parsed_data = json::parse(ifs);
-
-    if (verbose)
-    {
-        const auto name = parsed_data["name"];
-        fmt::print("Name: {}\n", name);
-    }
+    // if (verbose)
+    // {
+    //     const auto name = parsed_data["name"];
+    //     fmt::print("Name: {}\n", name);
+    // }
 
     return 0;
 }

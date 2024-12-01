@@ -17,6 +17,8 @@ const std::map<std::string, std::string> transform::change_map = {
 const std::map<std::string, std::string> transform::digraph_map = {
     {"o`","0"},
     {"g`","9"},
+    {"o'","0"},
+    {"g'","9"},
     {"ch","c"},
     {"sh","w"}
 };
@@ -182,6 +184,9 @@ std::vector<std::string> transform::hyphenation_from_syllables(const std::vector
             first_item_string << inp_data.at(0) << inp_data.at(1);
             ret_val.push_back(first_item_string.str());
             start_index = 2;
+            if(start_index >= inp_data.size()){
+                return ret_val;
+            }
         }
         for(size_t i = start_index; i < inp_data.size()-1; i++)
         {
