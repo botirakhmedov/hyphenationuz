@@ -3,6 +3,8 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/action_point.cpp")
 set(LIBRARY_HEADERS 
     "${CMAKE_CURRENT_SOURCE_DIR}/transform.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/core_error.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/result.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/action_point.h")
 set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
@@ -12,6 +14,7 @@ target_link_libraries(
     core
     PRIVATE "data_repository"
             commonlib
+            data_repository
             nlohmann_json::nlohmann_json
             fmt::fmt
             spdlog::spdlog)

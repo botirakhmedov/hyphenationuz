@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 
-enum error_code{
+namespace core{
+enum core_error_code{
     ge_ok,
     ge_unknown,
     ge_no_data,
@@ -10,7 +11,8 @@ enum error_code{
     ge_database_query_error
 };
 
-struct error_data{
-    error_code code;
+struct core_error{
+    core_error_code code;
     std::string information;
 };
+}

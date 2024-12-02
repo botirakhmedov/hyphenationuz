@@ -15,11 +15,9 @@ namespace fs = std::filesystem;
 
 int main(int argc, char **argv)
 {
-    std::string test_word {"alangali"};
     core::action_point action_point_object;
     action_point_object.file_to_database("C:/Users/botir/lugat.txt", [&](std::string out_data){
         std::cout << out_data << std::endl;
-        return error_code::ge_ok;
     });
     
     // const auto welcome_message =

@@ -227,7 +227,7 @@ result<dto::word_unit> transform::analyze_word(const std::string &inp_word)
     std::string clean_word = get_clean_word(inp_word);
     if(clean_word.empty())
     {
-        return error_code::ge_no_data;
+        return core_error_code::ge_no_data;
     }
     std::string ascii_str = convert_to_one_letter_ascii(clean_word);
     auto syllable_vector = split_to_syllables(ascii_str);

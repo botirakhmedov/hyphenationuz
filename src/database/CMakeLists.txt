@@ -1,9 +1,13 @@
 set(LIBRARY_SOURCES 
-    "${CMAKE_CURRENT_SOURCE_DIR}/data_repository.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/repository.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dbwrapper.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/sqlite3.c")
 set(LIBRARY_HEADERS 
     "${CMAKE_CURRENT_SOURCE_DIR}/interface.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/data_repository.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/db_error.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/parameters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/repository.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/dbwrapper.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/sqlite3.h")
 set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
