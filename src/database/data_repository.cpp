@@ -34,7 +34,11 @@ error_data repository::insert_word(dto::word_unit in_unit)
 
         if (prep_status == SQLITE_OK)
         {
-            sqlite3_bind_text(insert_stmt, 1, in_unit., -1, SQLITE_STATIC);
+            sqlite3_bind_text(insert_stmt, 1, in_unit.target_word.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(insert_stmt, 2, in_unit.syllable.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(insert_stmt, 3, in_unit.hyphenation.c_str(), -1, SQLITE_STATIC);
+
+            prep_status = sqlite3_step(insert_stmt);
         }
 
     }
