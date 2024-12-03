@@ -40,6 +40,16 @@ core_error_code core::action_point::file_to_database(std::string file_name, std:
             else
             {
                 if(w_result.data().target_word.size() > 1){
+                    auto res_query = repo.find_word(w_result.data().target_word);
+                    if(!res_query.has_error() && res_query.data().size() > 0){
+                        if(out_info != nullptr){
+                            out_info(std::format("word exists:{} - {}, {}, {}", w_item, 
+                                                                w_result.data().target_word,
+                                                                w_result.data().syllable,
+                                                                w_result.data().hyphenation));
+                        }
+                        continue;
+                    }
                     repo.insert_word(w_result.data());
                     if(out_info != nullptr){
                         out_info(std::format("accept word:{} - {}, {}, {}", w_item, 
@@ -55,7 +65,31 @@ core_error_code core::action_point::file_to_database(std::string file_name, std:
     if(out_info != nullptr){
         out_info(std::format("Done!"));
     }
-
+    
     return core_error_code::ge_ok;
 }
+
+std::vector<dto::word_unit> action_point::get_all_words(std::function<void(std::string)> out_info)
+{
+    database::repository repo;
+    auto result = repo.get_all_words();
+    if(result.has_error()){
+        if(out_info != nullptr){
+            out_info(std::format("accept word:{}-{}", int(result.error().code), result.error().information));
+            return std::vector<dto::word_unit>();
+        }
+    }
+    return result.data();
 }
+core_error_code action_point::update_word(dto::word_unit word_to_update, std::function<void(std::string)> out_info)
+{
+    database::repository repo;
+    auto result = repo.update_word(word_to_update);
+    if(result.code != core_error_code::ge_ok){
+        if(out_info != nullptr){
+            out_info(std::format("error on update:{}", int(result.code)));
+            return core_error_code::ge_database_query_error;
+        }
+    }
+}
+} // namespace core
