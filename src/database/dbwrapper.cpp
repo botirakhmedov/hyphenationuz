@@ -1,4 +1,5 @@
 #include "dbwrapper.h"
+#include "parameters.h"
 
 //#define SQLITE_ENABLE_COLUMN_METADATA
 
@@ -38,10 +39,10 @@ db_error dbw::execute_sql_noreturn(std::string sql_statement)
     return db_error_code::db_ok;
 }
 
-db_error dbw::insert_word(std::string sql_statement, std::string target, std::string sylleble, std::string hyphenation)
+db_error dbw::insert_word(std::string target, std::string sylleble, std::string hyphenation)
 {
     sqlite3_stmt *insert_stmt = NULL;
-    int prep_status = sqlite3_prepare_v2(db, sql_statement.c_str(), -1, &insert_stmt, NULL);
+    int prep_status = sqlite3_prepare_v2(db, insert_word_table.c_str(), -1, &insert_stmt, NULL);
 
     if (prep_status == SQLITE_OK)
     {
@@ -58,12 +59,13 @@ db_error dbw::insert_word(std::string sql_statement, std::string target, std::st
     return db_error_code::db_ok;
 }
 
-dbresult<dto::word_unit> dbw::execute_sql(std::string sql_statement)
+dbresult<dto::word_unit> dbw::select_word_all()
 {
+
     return db_error_code::db_ok;
 }
 
-dbresult<dto::word_unit> dbw::execute(std::string sql_statement, std::vector<std::variant<std::string, int, double>> values)
+dbresult<dto::word_unit> dbw::select_word(std::string key_word)
 {
     return db_error_code::db_ok;
 }
