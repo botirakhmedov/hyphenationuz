@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <map>
+#include <algorithm>
 #include "transform.h"
 
 namespace core{
@@ -11,7 +12,8 @@ const std::string transform::stop_symbols = {" {}()/|\\.,[]?:;\t\n\r"};
 
 const std::map<std::string, std::string> transform::change_map = {
     {"‘","`"},
-    {"’","'"}
+    {"’","'"},
+    {"ʼ","'"}
 };
 
 const std::map<std::string, std::string> transform::digraph_map = {
@@ -21,6 +23,28 @@ const std::map<std::string, std::string> transform::digraph_map = {
     {"g'","9"},
     {"ch","c"},
     {"sh","w"}
+};
+
+const std::map<std::string, std::string> transform::transform_digraph_map = {
+    {"0", "o`"},
+    {"9", "g`"},
+    {"c", "ch"},
+    {"w", "sh"}
+};
+
+const std::map<std::string, std::string> transform::transform_digraph_simple_map = {
+    {"0", "o'"},
+    {"9", "g'"},
+    {"c", "ch"},
+    {"w", "sh"}
+};
+
+const std::map<std::string, std::string> transform::transform_digraph_utf_map = {
+    {"0", "o‘"},
+    {"9", "g‘"},
+    {"c", "ch"},
+    {"w", "sh"},
+    {"'", "’"}
 };
 
 const std::string transform::vowels = {"aeuoi0"};
@@ -82,6 +106,28 @@ std::string transform::convert_to_one_letter_ascii(const std::string &inp_word)
     for(const auto& [key, value]:digraph_map)
     {
         replace_all(internal_copy, key, value);    
+    }
+    return internal_copy;
+}
+
+std::string transform::convert_one_letter_ascii_to_regular(const std::string &inp_word, symbol_type type)
+{
+    std::map<std::string, std::string> change_map; 
+    switch(type){
+        case symbol_type::base_digraph:
+            change_map = transform_digraph_map;
+        break;
+        case symbol_type::base_simple_digraph:
+            change_map = transform_digraph_simple_map;
+        break;
+        case symbol_type::base_utf_digraph:
+            change_map = transform_digraph_utf_map;
+        break;
+    }
+    std::string internal_copy(inp_word);
+    for(const auto& [key, value]:change_map)
+    {
+        replace_all(internal_copy, key, value);
     }
     return internal_copy;
 }

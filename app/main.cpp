@@ -17,15 +17,23 @@ namespace fs = std::filesystem;
 int main(int argc, char **argv)
 {
     core::action_point action_point_object;
+
     // action_point_object.file_to_database("C:/Users/botir/lugat.txt", [&](std::string out_data){
     //     std::cout << out_data << std::endl;
     // });
-    auto result_data = action_point_object.get_all_words([&](std::string out_data){
+    // action_point_object.file_to_database("C:/Users/botir/uz_Latn_UZ.txt", [&](std::string out_data){
+    //     std::cout << out_data << std::endl;
+    // });
+    action_point_object.generate_dictionary_file("C:/Users/botir/dict_latin_uz.txt", [&](std::string out_data){
         std::cout << out_data << std::endl;
     });
-    for(auto &item : result_data){
-        std::cout << std::format("--> {}, {}, {}", item.target_word, item.syllable, item.hyphenation) << std::endl;
-    }
+    
+    // auto result_data = action_point_object.get_all_words([&](std::string out_data){
+    //     std::cout << out_data << std::endl;
+    // });
+    // for(auto &item : result_data){
+    //     std::cout << std::format("--> {}, {}, {}", item.target_word, item.syllable, item.hyphenation) << std::endl;
+    // }
     // const auto welcome_message =
     //     fmt::format("Welcome to {} v{}\n", project_name, project_version);
     // spdlog::info(welcome_message);

@@ -11,7 +11,8 @@ struct test_input_data{
 std::vector<test_input_data> inp_data_vector {
     test_input_data{"alangali", "alangali", "a-lan-ga-li", "alan-ga-li"},
     test_input_data{"O‘ma’rifiy", "0ma'rifiy", "0-ma'-ri-fiy", "0ma'-ri-fiy"},
-    test_input_data{"idish", "idiw", "i-diw", "idiw"}
+    test_input_data{"idish", "idiw", "i-diw", "idiw"},
+    test_input_data{"zulqaʼda", "zulqa'da", "zul-qa'-da", "zul-qa'-da"}
 };
 
 // class AnalyzeParameterizedTest : public testing::TestWithParam<test_input_data> {

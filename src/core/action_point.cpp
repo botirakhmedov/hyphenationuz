@@ -81,6 +81,7 @@ std::vector<dto::word_unit> action_point::get_all_words(std::function<void(std::
     }
     return result.data();
 }
+
 core_error_code action_point::update_word(dto::word_unit word_to_update, std::function<void(std::string)> out_info)
 {
     database::repository repo;
@@ -91,5 +92,75 @@ core_error_code action_point::update_word(dto::word_unit word_to_update, std::fu
             return core_error_code::ge_database_query_error;
         }
     }
+}
+
+core_error_code action_point::generate_latex_hyphenation_file(std::string file_name, std::function<void(std::string)> out_info)
+{
+    auto out_file = std::ofstream{file_name};
+    if(out_info != nullptr){
+        out_info("Start file processing!");
+    }
+    if (!out_file.is_open())
+    {
+        if(out_info != nullptr){
+            out_info(std::format("Error on opening file:{}",file_name));
+        }
+        return core_error_code::ge_unable_open_file;
+    }
+    database::repository repo;
+    auto words_result = repo.get_all_words();
+    if(words_result.has_error()){
+        if(out_info != nullptr){
+            out_info(std::format("Error on reading database:{} {}", int(words_result.error().code), words_result.error().information));
+            return core_error_code::ge_database_query_error;
+        }
+    }
+
+    out_file << "hyphenation{" << std::endl;
+    core::transform text_transform;
+    for(const auto& w_item:words_result.data()){
+        auto result_string = text_transform.convert_one_letter_ascii_to_regular(w_item.hyphenation, symbol_type::base_simple_digraph);
+        out_file << result_string << std::endl;
+    }
+    out_file << "}" << std::endl;
+    out_file.close();
+    if(out_info != nullptr){
+        out_info("File created!");
+    }
+    return core_error_code::ge_ok;
+}
+
+core_error_code action_point::generate_dictionary_file(std::string file_name, std::function<void(std::string)> out_info)
+{
+    auto out_file = std::ofstream{file_name};
+    if(out_info != nullptr){
+        out_info("Start file processing!");
+    }
+    if (!out_file.is_open())
+    {
+        if(out_info != nullptr){
+            out_info(std::format("Error on opening file:{}",file_name));
+        }
+        return core_error_code::ge_unable_open_file;
+    }
+    database::repository repo;
+    auto words_result = repo.get_all_words();
+    if(words_result.has_error()){
+        if(out_info != nullptr){
+            out_info(std::format("Error on reading database:{} {}", int(words_result.error().code), words_result.error().information));
+            return core_error_code::ge_database_query_error;
+        }
+    }
+
+    core::transform text_transform;
+    for(const auto& w_item:words_result.data()){
+        auto result_string = text_transform.convert_one_letter_ascii_to_regular(w_item.target_word, symbol_type::base_simple_digraph);
+        out_file << result_string << std::endl;
+    }
+    out_file.close();
+    if(out_info != nullptr){
+        out_info("File created!");
+    }
+    return core_error_code::ge_ok;
 }
 } // namespace core
