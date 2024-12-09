@@ -12,7 +12,7 @@ add_library(core STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(core INTERFACE ${LIBRARY_INCLUDES})
 target_link_libraries(
     core
-    PRIVATE "data_repository"
+    PRIVATE data_repository
             commonlib
             data_repository
             nlohmann_json::nlohmann_json

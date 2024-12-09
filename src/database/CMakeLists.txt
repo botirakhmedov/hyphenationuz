@@ -14,7 +14,7 @@ set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 add_library(data_repository STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(data_repository SYSTEM INTERFACE ${LIBRARY_INCLUDES})
 target_link_libraries(
-    "data_repository"
+    data_repository
     PRIVATE commonlib 
             nlohmann_json::nlohmann_json
             fmt::fmt
