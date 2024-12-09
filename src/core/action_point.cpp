@@ -86,12 +86,13 @@ core_error_code action_point::update_word(dto::word_unit word_to_update, std::fu
 {
     database::repository repo;
     auto result = repo.update_word(word_to_update);
-    if(result.code != core_error_code::ge_ok){
+    if(result.code != database::db_ok){
         if(out_info != nullptr){
             out_info(std::format("error on update:{}", int(result.code)));
             return core_error_code::ge_database_query_error;
         }
     }
+    return core_error_code::ge_ok;
 }
 
 core_error_code action_point::generate_latex_hyphenation_file(std::string file_name, std::function<void(std::string)> out_info)

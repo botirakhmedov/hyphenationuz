@@ -112,20 +112,20 @@ std::string transform::convert_to_one_letter_ascii(const std::string &inp_word)
 
 std::string transform::convert_one_letter_ascii_to_regular(const std::string &inp_word, symbol_type type)
 {
-    std::map<std::string, std::string> change_map; 
+    std::map<std::string, std::string> local_change_map; 
     switch(type){
         case symbol_type::base_digraph:
-            change_map = transform_digraph_map;
+            local_change_map = transform_digraph_map;
         break;
         case symbol_type::base_simple_digraph:
-            change_map = transform_digraph_simple_map;
+            local_change_map = transform_digraph_simple_map;
         break;
         case symbol_type::base_utf_digraph:
-            change_map = transform_digraph_utf_map;
+            local_change_map = transform_digraph_utf_map;
         break;
     }
     std::string internal_copy(inp_word);
-    for(const auto& [key, value]:change_map)
+    for(const auto& [key, value]:local_change_map)
     {
         replace_all(internal_copy, key, value);
     }

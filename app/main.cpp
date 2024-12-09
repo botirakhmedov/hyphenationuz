@@ -34,61 +34,61 @@ int main(int argc, char **argv)
     // for(auto &item : result_data){
     //     std::cout << std::format("--> {}, {}, {}", item.target_word, item.syllable, item.hyphenation) << std::endl;
     // }
-    // const auto welcome_message =
-    //     fmt::format("Welcome to {} v{}\n", project_name, project_version);
-    // spdlog::info(welcome_message);
+    const auto welcome_message =
+        fmt::format("Welcome to {} v{}\n", project_name, project_version);
+    spdlog::info(welcome_message);
 
-    // cxxopts::Options options(project_name.data(), welcome_message);
+    cxxopts::Options options(project_name.data(), welcome_message);
 
-    // options.add_options("arguments")("h,help", "Print usage")(
-    //     "f,filename",
-    //     "File name",
-    //     cxxopts::value<std::string>())(
-    //     "v,verbose",
-    //     "Verbose output",
-    //     cxxopts::value<bool>()->default_value("false"));
+    options.add_options("arguments")("h,help", "Print usage")(
+        "f,filename",
+        "File name",
+        cxxopts::value<std::string>())(
+        "v,verbose",
+        "Verbose output",
+        cxxopts::value<bool>()->default_value("false"));
 
-    // auto result = options.parse(argc, argv);
+    auto result = options.parse(argc, argv);
 
-    // if (argc == 1 || result.count("help"))
-    // {
-    //     std::cout << options.help() << '\n';
-    //     return 0;
-    // }
+    if (argc == 1 || result.count("help"))
+    {
+        std::cout << options.help() << '\n';
+        return 0;
+    }
 
-    // auto filename = std::string{};
-    // auto verbose = false;
+    auto filename = std::string{};
+    auto verbose = false;
 
-    // if (result.count("filename"))
-    // {
-    //     filename = result["filename"].as<std::string>();
-    // }
-    // else
-    // {
-    //     return 1;
-    // }
+    if (result.count("filename"))
+    {
+        filename = result["filename"].as<std::string>();
+    }
+    else
+    {
+        return 1;
+    }
 
-    // verbose = result["verbose"].as<bool>();
+    verbose = result["verbose"].as<bool>();
 
-    // if (verbose)
-    // {
-    //     fmt::print("Opening file: {}\n", filename);
-    // }
+    if (verbose)
+    {
+        fmt::print("Opening file: {}\n", filename);
+    }
 
-    // auto ifs = std::ifstream{filename};
+    auto ifs = std::ifstream{filename};
 
-    // if (!ifs.is_open())
-    // {
-    //     return 1;
-    // }
+    if (!ifs.is_open())
+    {
+        return 1;
+    }
 
-    // const auto parsed_data = json::parse(ifs);
+    const auto parsed_data = json::parse(ifs);
 
-    // if (verbose)
-    // {
-    //     const auto name = parsed_data["name"];
-    //     fmt::print("Name: {}\n", name);
-    // }
+    if (verbose)
+    {
+        const auto name = parsed_data["name"];
+        fmt::print("Name: {}\n", name);
+    }
 
     return 0;
 }
