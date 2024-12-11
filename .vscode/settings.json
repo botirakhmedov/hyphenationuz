@@ -115,6 +115,10 @@
     },
     "makefile.configureOnOpen": false,
     "cSpell.words": [
-        "ctest"
+        "botir",
+        "ctest",
+        "cxxopts",
+        "lugat",
+        "spdlog"
     ]
 }
