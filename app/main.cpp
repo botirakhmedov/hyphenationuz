@@ -24,9 +24,9 @@ int main(int argc, char **argv)
     // action_point_object.file_to_database("C:/Users/botir/uz_Latn_UZ.txt", [&](std::string out_data){
     //     std::cout << out_data << std::endl;
     // });
-    action_point_object.generate_dictionary_file("C:/Users/botir/dict_latin_uz.txt", [&](std::string out_data){
-        std::cout << out_data << std::endl;
-    });
+    // action_point_object.generate_dictionary_file("C:/Users/botir/dict_latin_uz.txt", [&](std::string out_data){
+    //     std::cout << out_data << std::endl;
+    // });
     
     // auto result_data = action_point_object.get_all_words([&](std::string out_data){
     //     std::cout << out_data << std::endl;
